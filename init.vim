@@ -1,2 +1,6 @@
-set rnu					" Show line numbers relative to cursor
-set nu					" Set cursor line
+set number relativenumber
+set nocompatible
+filetype plugin on
+syntax on
+set encoding=utf-8
+set clipboard+=unnamedplus
