@@ -15,3 +15,8 @@ require("settings")
 
 -- load plugins
 require("plugins")
+
+-- load plugins configs
+require("lualine-cfg")
+require("treesitter-cfg")
+require("lsp-cfg")
