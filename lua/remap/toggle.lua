@@ -37,6 +37,10 @@ vim.keymap.set('n', '<leader>tu', vim.cmd.UndotreeToggle, {
     desc = "Toggle Undotree"
 })
 
+vim.keymap.set('n', '<leader>tt', vim.cmd.ToggleTerm, {
+    desc = "Toggle Terminal"
+})
+
 -- non plugins
 -- default disabled
 vim.keymap.set('n', '<leader>ts', function ()

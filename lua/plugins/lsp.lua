@@ -53,5 +53,12 @@ return {
         version = "*",
         event = "VeryLazy",
         opts = {}
+    },
+    {
+        "akinsho/toggleterm.nvim",
+        version = "*",
+        opts = {
+            direction = 'float'
+        }
     }
 }

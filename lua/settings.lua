@@ -16,6 +16,8 @@ vim.opt.scrolloff = 6
 vim.opt.termguicolors = true
 vim.opt.modeline = false
 
+vim.opt.endofline = false
+
 vim.opt.listchars:append "space:⋅"
 vim.opt.listchars:append "eol:↴"
 vim.opt.listchars:append "tab:->"
