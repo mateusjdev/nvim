@@ -38,7 +38,14 @@ vim.keymap.set('n', '<leader>tu', vim.cmd.UndotreeToggle, {
 })
 
 -- non plugins
+-- default disabled
+vim.keymap.set('n', '<leader>ts', function ()
+    vim.opt.spell = not(vim.opt.spell:get())
+end, {
+    desc = "Toggle spellcheck"
+})
 
+-- default disabled
 vim.keymap.set('n', '<leader>tch', function ()
     vim.opt.list = not(vim.opt.list:get())
 end, {

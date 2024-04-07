@@ -19,7 +19,7 @@ return {
         lazy = false,
         dependencies = {
             -- Manage the language servers from neovim
-            { "williamboman/mason.nvim", build = ":MasonUpdate" },
+            "williamboman/mason.nvim",
             'williamboman/mason-lspconfig.nvim',
             -- LSP Support
             'neovim/nvim-lspconfig',

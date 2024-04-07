@@ -12,5 +12,8 @@ return {
             show_icons = true,
             leader_key = ';'
         }
+    },
+    {
+        "simonefranza/nvim-conv"
     }
 }
