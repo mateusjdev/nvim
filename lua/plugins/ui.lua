@@ -109,4 +109,13 @@ return {
         branch = '0.1.x',
         dependencies = { 'nvim-lua/plenary.nvim' }
     },
+	-- Better vim.ui
+	{
+        "folke/noice.nvim",
+        event = "VeryLazy",
+        opts = {},
+        dependencies = {
+            "MunifTanjim/nui.nvim"
+        }
+    }
 }
