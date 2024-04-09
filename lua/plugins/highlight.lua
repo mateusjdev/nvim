@@ -2,6 +2,7 @@ return {
     -- provide highlighting based on file format
     {
         "nvim-treesitter/nvim-treesitter",
+        enabled = ENABLE_TREESITTER,
         build = ":TSUpdate",
         config = function()
             local configs = require("nvim-treesitter.configs")

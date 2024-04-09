@@ -34,7 +34,8 @@ return {
         dependencies = { "nvim-tree/nvim-web-devicons" },
     },
     {
-        'nvim-treesitter/nvim-treesitter-context'
+        'nvim-treesitter/nvim-treesitter-context',
+        enable = ENABLE_TREESITTER
     },
     {
         "tpope/vim-fugitive"

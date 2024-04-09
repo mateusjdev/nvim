@@ -15,8 +15,14 @@ vim.opt.rtp:prepend(lazypath)
 require("settings") -- simple settings
 
 ENABLE_LSP = vim.loop.os_uname().machine ~= 'aarch64'
--- IS_DESKTOP = os.getenv("XDG_SESSION_TYPE") == 'x11' or
---     os.getenv("XDG_SESSION_TYPE") == 'wayland'
+
+local function has_compiler(executables)
+    return vim.tbl_filter(function(c) ---@param c string
+        return c ~= vim.NIL and vim.fn.executable(c) == 1
+    end, executables)[1]
+end
+
+ENABLE_TREESITTER = has_compiler({ vim.fn.getenv "CC", "cc", "gcc", "clang", "cl", "zig" }) or false
 
 -- load plugins list
 require("lazy").setup({
@@ -28,6 +34,10 @@ require("lazy").setup({
     { import = 'plugins.lsp',      cond = ENABLE_LSP },
     { import = 'plugins.extra' },
 })
+
+if not ENABLE_TREESITTER then
+    vim.notify("No compilers found, disabling treesitter", vim.log.levels.INFO)
+end
 
 require("remap") -- key remaps
 require("autocmd")
