@@ -25,18 +25,27 @@ end
 ENABLE_TREESITTER = has_compiler({ vim.fn.getenv "CC", "cc", "gcc", "clang", "cl", "zig" }) or false
 
 -- load plugins list
-require("lazy").setup({
-    change_detection = { notify = false, },
-    { import = 'plugins.core' },
-    { import = 'plugins.ui' },
-    { import = 'plugins.format' },
-    { import = 'plugins.highlight' },
-    { import = 'plugins.lsp',      cond = ENABLE_LSP },
-    { import = 'plugins.extra' },
-})
+require("lazy").setup(
+-- plugins
+    {
+        { import = 'plugins.core' },
+        { import = 'plugins.ui' },
+        { import = 'plugins.format' },
+        { import = 'plugins.highlight' },
+        { import = 'plugins.lsp',      cond = ENABLE_LSP },
+        { import = 'plugins.extra' },
+    },
+    -- opts
+    {
+        change_detection = {
+            enabled = false,
+            notify = false,
+        }
+    }
+)
 
 if not ENABLE_TREESITTER then
-    vim.notify("No compilers found, disabling treesitter", vim.log.levels.INFO)
+    vim.notify("No compilers found, disabling treesitter", vim.log.levels.WARN)
 end
 
 require("remap") -- key remaps

@@ -6,7 +6,6 @@ return {
         opts = {
             options = {
                 icons_enabled = true,
-                -- theme = 'nord',
                 component_separators = { left = '', right = '' },
                 section_separators = { left = '', right = '' },
                 disabled_filetypes = {
@@ -79,16 +78,30 @@ return {
         "j-hui/fidget.nvim",
         lazy = false,
         priority = 1000,
-        opts = {
-            progress = {
-                display = {
-                    done_ttl = 4
+        config = function()
+            require("fidget").setup({
+                progress = {
+                    display = {
+                        done_ttl = 5
+                    },
                 },
-            },
-            notification = {
-                override_vim_notify = true,
-            }
-        },
+                notification = {
+                    override_vim_notify = true,
+                    configs = {
+                        default = vim.tbl_extend(
+                            "force",
+                            require("fidget.notification").default_config,
+                            { ttl = 5 }
+                        ),
+                    },
+                },
+                integration = {
+                    ["nvim-tree"] = {
+                        enable = true,
+                    },
+                },
+            })
+        end
     },
     {
         "nvim-neo-tree/neo-tree.nvim",
@@ -109,11 +122,70 @@ return {
         branch = '0.1.x',
         dependencies = { 'nvim-lua/plenary.nvim' }
     },
-	-- Better vim.ui
-	{
-        "folke/noice.nvim",
-        event = "VeryLazy",
-        opts = {},
+    -- Better vim.ui
+    -- cmdlines is handled by noice.mini
+    -- everything else is handled by fidget.nvim
+    {
+        -- mateusjdev/noice.nvim is a custom branch of folke/noice.nvim which
+        -- uses j-hui/fidget.nvim instead of nvim-notify
+        "mateusjdev/noice.nvim",
+        branch = "use-fidget",
+        priority = 1000,
+        lazy = false,
+        opts = {
+            notify = {
+                enabled = false, -- fallback to fidget
+            },
+            messages = {
+                -- ↓ if messages is disabled, cmdline will appear
+                enabled = true,              -- enables the Noice messages UI
+                view = "notify",             -- default view for messages
+                view_error = "notify",       -- view for errors
+                view_warn = "notify",        -- view for warnings
+                view_history = "messages",   -- view for :messages
+                view_search = "virtualtext", -- view for search count messages. Set to `false` to disable
+            },
+            views = {
+                mini = {
+                    timeout = 5000,
+                    align = "right",
+                    position = {
+                        row = 1
+                    }
+                }
+            },
+            lsp = {
+                progress = {
+                    enabled = false, -- fallback to fidget
+                },
+                message = {
+                    enabled = false, -- fallback to fidget
+                },
+                -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
+                -- TODO: add option to lsp.lua
+                --
+                -- override = {
+                --     ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+                --     ["vim.lsp.util.stylize_markdown"] = true,
+                --     ["cmp.entry.get_documentation"] = true, -- requires hrsh7th/nvim-cmp
+                -- },
+            },
+            routes = {
+                {
+                    filter = {
+                        event = 'msg_show',
+                        any = {
+                            -- { find = '%d+L, %d+B' },
+                            { find = '; after #%d+' },
+                            { find = '; before #%d+' },
+                            { find = '%d fewer lines' },
+                            { find = '%d more lines' },
+                        },
+                    },
+                    opts = { skip = true },
+                }
+            },
+        },
         dependencies = {
             "MunifTanjim/nui.nvim"
         }

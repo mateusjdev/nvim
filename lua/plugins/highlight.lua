@@ -10,7 +10,7 @@ return {
             configs.setup({
                 ensure_installed = { "c", "lua", "vim", "vimdoc", "javascript",
                     "html", "query", "rust", "markdown", "go",
-                    "dockerfile", "cpp", "bash", "yaml", },
+                    "dockerfile", "cpp", "bash", "yaml", "regex" },
                 sync_install = false,
                 auto_install = true,
                 highlight = { enable = true },
