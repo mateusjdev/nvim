@@ -30,3 +30,8 @@ vim.opt.smartcase = true
 vim.opt.infercase = true
 
 vim.opt.spelllang = "pt,en"
+
+-- title
+vim.opt.title = true
+-- TODO: change to path if in project/git repo
+vim.opt.titlestring = 'nvim %{expand("%:p:~")}'
