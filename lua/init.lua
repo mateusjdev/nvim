@@ -33,6 +33,7 @@ require("lazy").setup(
         { import = 'plugins.format' },
         { import = 'plugins.highlight' },
         { import = 'plugins.lsp',      cond = ENABLE_LSP },
+        { import = 'plugins.lspt',     cond = ENABLE_LSP },
         { import = 'plugins.extra' },
     },
     -- opts
@@ -51,6 +52,3 @@ end
 require("remap") -- key remaps
 require("autocmd")
 
-if ENABLE_LSP then
-    require("lsp")
-end
