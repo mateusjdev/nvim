@@ -86,7 +86,6 @@ return {
                     },
                 },
                 notification = {
-                    override_vim_notify = true,
                     configs = {
                         default = vim.tbl_extend(
                             "force",
@@ -94,6 +93,16 @@ return {
                             { ttl = 5 }
                         ),
                     },
+                    override_vim_notify = true,
+                    -- not used for now as setting these can cause view problems
+                    -- TODO: check if align = bottom-left + wrap + [LEVEL] message
+                    -- could be implemented in fidget.nvim (like noice.nvim/mini)
+                    -- window = {
+                    --     max_width = math.floor(vim.o.columns * 0.33), -- Maximum width of the notification window
+                    --     max_height = math.floor(vim.o.lines * 0.5), -- Maximum height of the notification window
+                    --     x_padding = 1,    -- Padding from right edge of window boundary
+                    --     y_padding = 0,    -- Padding from bottom edge of window boundary
+                    -- }
                 },
                 integration = {
                     ["nvim-tree"] = {

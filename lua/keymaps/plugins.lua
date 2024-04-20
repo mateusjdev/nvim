@@ -1,3 +1,5 @@
+local utils = require("utils")
+
 -- plugins/lazy
 vim.keymap.set("n", "<leader>pp", vim.cmd.Lazy, {
     desc = "Open Lazy"
@@ -29,7 +31,7 @@ vim.keymap.set("n", "<leader>ssw", vim.cmd.SudaWrite, {
 -- plugins/ui/lualine
 --- Switch between displaying [file path] and [filename]
 local full_path = false
-local toggle_full_path = function()
+vim.keymap.set("n", "<leader>tp", function()
     full_path = not full_path
     if full_path then
         require("lualine").setup {
@@ -40,9 +42,8 @@ local toggle_full_path = function()
             sections = { lualine_c = { { "filename" } } }
         }
     end
-end
-
-vim.keymap.set("n", "<leader>tp", toggle_full_path, {
+    utils.notifyToggled("Full Path", full_path)
+end, {
     desc = "Switch lualine:filename to full path"
 })
 
@@ -54,10 +55,19 @@ vim.keymap.set("n", "<leader>ff", telescope_cmd.find_files, {
 vim.keymap.set("n", "<C-o>", telescope_cmd.find_files, {
     desc = "Find files"
 })
--- TODO: check if ripgrep is installed
-vim.keymap.set("n", "<leader>fg", telescope_cmd.live_grep, {
-    desc = "Grep files"
-})
+
+if ENABLE_RIPGREP then
+    vim.keymap.set("n", "<leader>fg", telescope_cmd.live_grep, {
+        desc = "Grep files"
+    })
+else
+    vim.keymap.set("n", "<leader>fg", function()
+        utils.notifyUnavaliable("ripgrep")
+    end, {
+        desc = "which_key_ignore"
+    })
+end
+
 vim.keymap.set("n", "<leader>f\"", telescope_cmd.registers, {
     desc = "Find registers"
 })

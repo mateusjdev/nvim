@@ -1,18 +1,17 @@
+local utils = require("utils")
+
 -- Toogle diagnostics
 -- Check need to move to remap/lsp
 local diagnostics_active = true
-local toggle_diagnostics = function()
+vim.keymap.set('n', '<leader>td', function ()
     diagnostics_active = not diagnostics_active
     if diagnostics_active then
-        vim.api.nvim_echo({ { "Show diagnostics" } }, false, {})
         vim.diagnostic.enable()
     else
-        vim.api.nvim_echo({ { "Disable diagnostics" } }, false, {})
         vim.diagnostic.disable()
     end
-end
-
-vim.keymap.set('n', '<leader>td', toggle_diagnostics, {
+    utils.notifyToggled("Disgnostics", diagnostics_active)
+end, {
     desc = "Toggle Diagnostics"
 })
 

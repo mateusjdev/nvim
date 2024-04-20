@@ -1,11 +1,8 @@
--- TODO: replace with another plugin for
--- favorite folders
+-- TODO: add a plugin to switch through projects, folders or bookmarks
 local function change_dir(newdir)
     vim.cmd.cd(newdir)
     vim.notify(vim.fn.getcwd())
 end
-
--- TODO: add a plugin to switch through projects, folders or bookmarks
 vim.keymap.set("n", "<leader>cr", function() change_dir("%:h") end)
 vim.keymap.set("n", "<leader>ch", function() change_dir("~/") end)
 vim.keymap.set("n", "<leader>cg", function() change_dir("~/.config/nvim/") end)
@@ -24,9 +21,9 @@ vim.keymap.set("x", "<leader>uh", ":'<,'>:w !md5sum<cr>", {
 })
 
 -- other remaps
-require("remap.toggle")
-require("remap.plugins")
+require("keymaps.toggle")
+require("keymaps.plugins")
 
 if ENABLE_LSP then
-    require("remap.lsp")
+    require("keymaps.lsp")
 end

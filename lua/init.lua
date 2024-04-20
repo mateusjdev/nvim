@@ -13,16 +13,12 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("settings") -- simple settings
+local utils = require("utils")
 
-ENABLE_LSP = vim.loop.os_uname().machine ~= 'aarch64'
-
-local function has_compiler(executables)
-    return vim.tbl_filter(function(c) ---@param c string
-        return c ~= vim.NIL and vim.fn.executable(c) == 1
-    end, executables)[1]
-end
-
-ENABLE_TREESITTER = has_compiler({ vim.fn.getenv "CC", "cc", "gcc", "clang", "cl", "zig" }) or false
+-- TODO: store flags in config
+ENABLE_LSP = vim.loop.os_uname().machine ~= 'aarch64' -- disable lsp on arm devices
+ENABLE_TREESITTER = utils.hasExecuTable({ vim.fn.getenv("CC"), "cc", "gcc", "clang", "cl", "zig" })
+ENABLE_RIPGREP = utils.hasExecuTable({ "rg" })
 
 -- load plugins list
 require("lazy").setup(
@@ -32,6 +28,7 @@ require("lazy").setup(
         { import = 'plugins.ui' },
         { import = 'plugins.format' },
         { import = 'plugins.highlight' },
+        -- TODO: add toggle to enable LSP if needed
         { import = 'plugins.lsp',      cond = ENABLE_LSP },
         { import = 'plugins.lspt',     cond = ENABLE_LSP },
         { import = 'plugins.extra' },
@@ -49,6 +46,6 @@ if not ENABLE_TREESITTER then
     vim.notify("No compilers found, disabling treesitter", vim.log.levels.WARN)
 end
 
-require("remap") -- key remaps
+require("keymaps")
 require("autocmd")
 
