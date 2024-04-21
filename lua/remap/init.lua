@@ -24,3 +24,4 @@ vim.keymap.set('v', '<leader>uh', ':\'<,\'>:w !md5sum<cr>', {
 require("remap.toggle")
 require("remap.plugins")
 require("remap.settings")
+require("remap.indent")

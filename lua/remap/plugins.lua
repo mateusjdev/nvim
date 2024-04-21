@@ -52,6 +52,7 @@ vim.keymap.set('n', '<leader>tp', toggle_full_path, {
 })
 
 -- telescope
+local telescope = require('telescope')
 local telescope_cmd = require('telescope.builtin')
 vim.keymap.set('n', '<leader>ff', telescope_cmd.find_files, {
     desc = "Find files"
@@ -61,6 +62,9 @@ vim.keymap.set('n', '<C-o>', telescope_cmd.find_files, {
 })
 vim.keymap.set('n', '<leader>fg', telescope_cmd.live_grep, {
     desc = "Grep"
+})
+vim.keymap.set('n', '<leader>f"', telescope.extensions.register_preview.registers, {
+    desc = "Registers"
 })
 vim.keymap.set('n', '<leader>fb', telescope_cmd.buffers, {
     desc = "Buffers"
