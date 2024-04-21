@@ -23,6 +23,7 @@ vim.keymap.set("x", "<leader>uh", ":'<,'>:w !md5sum<cr>", {
 -- other remaps
 require("keymaps.toggle")
 require("keymaps.plugins")
+require("keymaps.indent")
 
 if ENABLE_LSP then
     require("keymaps.lsp")

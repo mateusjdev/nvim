@@ -48,6 +48,7 @@ end, {
 })
 
 -- plugins/ui/telescope
+local telescope = require('telescope')
 local telescope_cmd = require("telescope.builtin")
 vim.keymap.set("n", "<leader>ff", telescope_cmd.find_files, {
     desc = "Find files"
@@ -68,7 +69,7 @@ else
     })
 end
 
-vim.keymap.set("n", "<leader>f\"", telescope_cmd.registers, {
+vim.keymap.set("n", "<leader>f\"", telescope.extensions.register_preview.registers, {
     desc = "Find registers"
 })
 vim.keymap.set("n", "<leader>fb", telescope_cmd.buffers, {
