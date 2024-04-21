@@ -1,3 +1,5 @@
+local utils = require("utils")
+
 return {
     {
         "folke/neodev.nvim",
@@ -86,15 +88,24 @@ return {
                 lsp_zero.default_keymaps({ buffer = bufnr })
             end)
 
+            -- check dependencies and enable handler if possible
+            local ensure_installed = { "lua_ls" }
+            if utils.hasExecuTable("npm") then
+                table.insert(ensure_installed, "tsserver")
+                table.insert(ensure_installed, "pyright")
+                table.insert(ensure_installed, "yamlls")
+                table.insert(ensure_installed, "html")
+            end
+            if utils.hasExecuTable("go") then
+                table.insert(ensure_installed, "gopls")
+            end
+            -- TODO: check if has unzip dependency on windows
+            if utils.hasExecuTable("unzip") and utils.hasExecuTable("clangd") then
+                table.insert(ensure_installed, "clangd")
+            end
+
             require('mason-lspconfig').setup({
-                -- TODO: check dependencies and enable only possible
-                -- - tsserver: npm
-                -- - pyright: npm
-                -- - gopls: go
-                -- - lua_ls: ?
-                -- - clangd: unzip
-                -- ensure_installed = { "tsserver", "clangd", "gopls", "lua_ls", "pyright" },
-                ensure_installed = { "lua_ls" },
+                ensure_installed = ensure_installed,
                 handlers = {
                     -- this first function is the "default handler"
                     -- it applies to every language server without a "custom handler"
@@ -122,8 +133,8 @@ return {
 
                     clangd = function()
                         require('lspconfig').clangd.setup({
-                            filetypes = { "c", "h", "cpp", "objc", "objcpp", "cuda",
-                                "proto", "hpp" },
+                            filetypes = { "c", "h", "cpp", "objc", "objcpp",
+                                "cuda", "proto", "hpp" },
                         })
                     end,
 

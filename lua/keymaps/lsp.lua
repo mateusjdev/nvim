@@ -1,3 +1,8 @@
+-- plugins/lsp/mason
+vim.keymap.set("n", "<leader>pm", vim.cmd.Mason, {
+    desc = "Open Lazy"
+})
+
 -- plugins/lsp/toggleterm
 vim.keymap.set('n', '<leader>tt', vim.cmd.ToggleTerm, {
     desc = "Toggle Terminal"
