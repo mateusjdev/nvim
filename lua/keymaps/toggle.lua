@@ -25,12 +25,6 @@ vim.keymap.set('n', '<leader>tf', ":Neotree toggle<CR>", {
     desc = "Toggle Neotree"
 })
 
--- plugins/highlight/colorizer
--- TODO: disable colorizer by default
-vim.keymap.set('n', '<leader>tco', vim.cmd.ColorizerToggle, {
-    desc = "Toggle Colorizer"
-})
-
 -- plugins/extra/undotree
 vim.keymap.set('n', '<leader>tu', vim.cmd.UndotreeToggle, {
     desc = "Toggle Undotree"

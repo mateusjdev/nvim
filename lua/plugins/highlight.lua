@@ -23,13 +23,13 @@ return {
         "lukas-reineke/indent-blankline.nvim",
         main = "ibl",
         opts = {},
-        event = "VeryLazy"
+        event = "UIEnter"
     },
     -- hide your colorcolumn when unneeded.
     {
         "m4xshen/smartcolumn.nvim",
         opts = {},
-        event = "VeryLazy"
+        event = "UIEnter"
     },
     -- highlight and search for todo comments like TODO, HACK, BUG in your code
     -- base.
@@ -43,6 +43,8 @@ return {
     {
         "NvChad/nvim-colorizer.lua",
         opts = {},
-        event = "VeryLazy"
+        keys = {
+            { "<leader>tco", vim.cmd.ColorizerToggle, desc = "Toggle colorizer" },
+        }
     },
 }

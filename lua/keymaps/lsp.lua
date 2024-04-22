@@ -1,6 +1,6 @@
 -- plugins/lsp/mason
 vim.keymap.set("n", "<leader>pm", vim.cmd.Mason, {
-    desc = "Open Lazy"
+    desc = "Open Mason"
 })
 
 -- plugins/lsp/toggleterm

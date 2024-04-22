@@ -2,7 +2,7 @@ return {
     {
         "johmsalas/text-case.nvim",
         dependencies = { "nvim-telescope/telescope.nvim" },
-        event = "VeryLazy",
+        lazy = true,
         config = function()
             require("textcase").setup({})
             require("telescope").load_extension("textcase")
@@ -13,34 +13,38 @@ return {
                 "<leader>mtc.",
                 "<cmd>TextCaseOpenTelescope<CR>",
                 mode = { "n", "v" },
-                desc = "Telescope"
+                desc = "Text Case"
             },
         },
     },
     {
         'echasnovski/mini.trailspace',
         version = '*',
-        opts = {},
-        event = "VeryLazy"
+        event = "VeryLazy",
+        opts = {}
     },
     {
         'echasnovski/mini.pairs',
         version = '*',
+        event = "VeryLazy",
         opts = {}
     },
     {
         'echasnovski/mini.align',
         version = '*',
-        opts = {},
-        event = "VeryLazy"
+        event = "VeryLazy",
+        opts = {}
     },
+    -- Comment lines
     {
         'numToStr/Comment.nvim',
+        event = "VeryLazy",
         opts = {}
     },
     {
         'echasnovski/mini.move',
         version = '*',
+        event = "VeryLazy",
         opts = {
             mappings = {
                 -- Move visual selection in Visual mode. Defaults are Alt (Meta) + hjkl.

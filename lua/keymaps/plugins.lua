@@ -22,12 +22,6 @@ vim.keymap.set("n", "<C-w", vim.cmd.BufferClose, {
     desc = "Close buffer"
 })
 
--- plugins/core/suda
--- TODO: use a plugin to show a confirmation dialog
-vim.keymap.set("n", "<leader>ssw", vim.cmd.SudaWrite, {
-    desc = "Write as sudo"
-})
-
 -- plugins/ui/lualine
 --- Switch between displaying [file path] and [filename]
 local full_path = false

@@ -1,13 +1,18 @@
 return {
+    -- TODO: add keybind to load all of extras lazzy
     {
         "vimwiki/vimwiki",
         enabled = false
     },
     {
-        "mbbill/undotree"
+        "mbbill/undotree",
+        lazy = false
     },
     {
+        -- Check LazyLoad
         "otavioschwanck/arrow.nvim",
+        lazy = true,
+        event = "VeryLazy",
         opts = {
             show_icons = true,
             leader_key = ';',
@@ -15,6 +20,8 @@ return {
         }
     },
     {
-        "simonefranza/nvim-conv"
+        "simonefranza/nvim-conv",
+        lazy = true,
+        event = "VeryLazy"
     }
 }

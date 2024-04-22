@@ -10,6 +10,14 @@ return {
     },
     {
         "lambdalisue/suda.vim",
-        event = "VeryLazy",
+        lazy = true,
+        keys = {
+            -- TODO: use a plugin to show a confirmation dialog
+            {
+                "<leader>ssw",
+                vim.cmd.SudaWrite,
+                desc = "Write as sudo"
+            }
+        }
     },
 }
