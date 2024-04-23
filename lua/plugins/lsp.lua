@@ -63,6 +63,54 @@ return {
             })
         end
     },
+    {
+        "SmiteshP/nvim-navic",
+        dependencies = "neovim/nvim-lspconfig",
+        lazy = true,
+        opts = {
+            highlight = true,
+            separator = " " .. require("lualine").get_config().options.component_separators.left .. " "
+        },
+        config = function(_, opts)
+            local status_line_bg = vim.api.nvim_get_hl(0, { name = "StatusLine" }).bg
+            local function adjust_bg(highlight)
+                local highlight_fg = vim.api.nvim_get_hl(0, { name = highlight, link = false }).fg
+                vim.api.nvim_set_hl(0, highlight, { default = false, bg = status_line_bg, fg = highlight_fg })
+            end
+
+            -- TODO: add color to blank items
+            adjust_bg("NavicIconsFile")
+            adjust_bg("NavicIconsModule")
+            adjust_bg("NavicIconsNamespace")
+            adjust_bg("NavicIconsPackage")
+            adjust_bg("NavicIconsClass")
+            adjust_bg("NavicIconsMethod")
+            adjust_bg("NavicIconsProperty")
+            adjust_bg("NavicIconsField")
+            adjust_bg("NavicIconsConstructor")
+            adjust_bg("NavicIconsEnum")
+            adjust_bg("NavicIconsInterface")
+            adjust_bg("NavicIconsFunction")
+            adjust_bg("NavicIconsVariable")
+            adjust_bg("NavicIconsConstant")
+            adjust_bg("NavicIconsString")
+            adjust_bg("NavicIconsNumber")
+            adjust_bg("NavicIconsBoolean")
+            adjust_bg("NavicIconsArray") -- !color
+            adjust_bg("NavicIconsObject")
+            adjust_bg("NavicIconsKey")
+            adjust_bg("NavicIconsNull")
+            adjust_bg("NavicIconsEnumMember")
+            adjust_bg("NavicIconsStruct")
+            adjust_bg("NavicIconsEvent")
+            adjust_bg("NavicIconsOperator")
+            adjust_bg("NavicIconsTypeParameter")
+            adjust_bg("NavicText")
+            adjust_bg("NavicSeparator")
+
+            require("nvim-navic").setup(opts)
+        end
+    },
 
     -- LSP
     {
@@ -82,10 +130,13 @@ return {
 
             -- if you want to know more about mason.nvim
             -- read this: https://github.com/VonHeikemen/lsp-zero.nvim/blob/v3.x/doc/md/guides/integrate-with-mason-nvim.md
-            lsp_zero.on_attach(function(_, bufnr)
+            lsp_zero.on_attach(function(client, bufnr)
                 -- see :help lsp-zero-keybindings
                 -- to learn the available actions
                 lsp_zero.default_keymaps({ buffer = bufnr })
+                if client.server_capabilities.documentSymbolProvider then
+                    require("nvim-navic").attach(client, bufnr)
+                end
             end)
 
             -- check dependencies and enable handler if possible

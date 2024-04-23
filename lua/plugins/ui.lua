@@ -3,45 +3,77 @@ return {
     {
         'nvim-lualine/lualine.nvim',
         dependencies = { 'nvim-tree/nvim-web-devicons' },
-        opts = {
-            options = {
-                icons_enabled = true,
-                component_separators = { left = '', right = '' },
-                section_separators = { left = '', right = '' },
-                disabled_filetypes = {
-                    statusline = {},
-                    winbar = {},
+        config = function()
+            local enable_winbar = function()
+                -- TODO: check space for every split window
+                local is_lsp_active = vim.lsp.get_active_clients()[1] ~= nil
+                return is_lsp_active -- or require("nvim-navic").is_available()
+            end
+
+            local is_winbar_disabled = function()
+                return not enable_winbar()
+            end
+
+            require("lualine").setup {
+                options = {
+                    icons_enabled = true,
+                    component_separators = { left = '', right = '' },
+                    section_separators = { left = '', right = '' },
+                    disabled_filetypes = {
+                        statusline = {},
+                        winbar = {},
+                    },
+                    ignore_focus = {},
+                    always_divide_middle = true,
+                    globalstatus = true,
+                    refresh = {
+                        statusline = 1000,
+                        tabline = 1000,
+                        winbar = 1000,
+                    }
                 },
-                ignore_focus = {},
-                always_divide_middle = true,
-                globalstatus = false,
-                refresh = {
-                    statusline = 1000,
-                    tabline = 1000,
-                    winbar = 1000,
-                }
-            },
-            sections = {
-                lualine_a = { 'mode' },
-                lualine_b = { 'branch', 'diff', 'diagnostics' },
-                lualine_c = { { 'filename', path = 0 } },
-                lualine_x = { 'encoding', 'fileformat', 'filetype' },
-                lualine_y = { 'progress' },
-                lualine_z = { 'location', 'hostname' }
-            },
-            inactive_sections = {
-                lualine_a = {},
-                lualine_b = {},
-                lualine_c = { 'filename' },
-                lualine_x = { 'location' },
-                lualine_y = {},
-                lualine_z = {}
-            },
-            tabline = {},
-            winbar = {},
-            inactive_winbar = {},
-            extensions = {}
-        }
+                sections = {
+                    lualine_a = { 'mode' },
+                    lualine_b = { 'branch', 'diff', { 'diagnostics', cond = is_winbar_disabled } },
+                    lualine_c = { { 'filename', path = 0 } },
+                    lualine_x = { 'encoding', 'fileformat', 'filetype' },
+                    lualine_y = { 'progress' },
+                    lualine_z = { 'location', 'hostname' }
+                },
+                inactive_sections = {
+                    lualine_a = {},
+                    lualine_b = {},
+                    lualine_c = { 'filename' },
+                    lualine_x = { 'location' },
+                    lualine_y = {},
+                    lualine_z = {}
+                },
+                tabline = {},
+                winbar = {
+                    lualine_b = {
+                        -- { 'filetype', cond = enable_winbar }
+                        {
+                            function()
+                                return vim.lsp.get_active_clients()[1].config.name
+                            end,
+                            cond = enable_winbar
+                        },
+                        { 'diagnostics', cond = enable_winbar }
+                    },
+                    lualine_c = {
+                        {
+                            function()
+                                return require("nvim-navic").get_location()
+                            end,
+                            cond = enable_winbar
+                        }
+                    },
+                },
+                inactive_winbar = {
+                },
+                extensions = { "neo-tree" },
+            }
+        end
     },
     {
         "folke/tokyonight.nvim",

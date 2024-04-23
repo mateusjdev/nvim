@@ -24,15 +24,16 @@ vim.keymap.set("n", "<C-w", vim.cmd.BufferClose, {
 
 -- plugins/ui/lualine
 --- Switch between displaying [file path] and [filename]
+local lualine = require("lualine")
 local full_path = false
 vim.keymap.set("n", "<leader>tp", function()
     full_path = not full_path
     if full_path then
-        require("lualine").setup {
+        lualine.setup {
             sections = { lualine_c = { { "filename", path = 3 } } }
         }
     else
-        require("lualine").setup {
+        lualine.setup {
             sections = { lualine_c = { { "filename" } } }
         }
     end
@@ -62,7 +63,6 @@ else
         desc = "which_key_ignore"
     })
 end
-
 vim.keymap.set("n", "<leader>f\"", telescope.extensions.register_preview.registers, {
     desc = "Find registers"
 })
@@ -71,4 +71,7 @@ vim.keymap.set("n", "<leader>fb", telescope_cmd.buffers, {
 })
 vim.keymap.set("n", "<leader>fh", telescope_cmd.help_tags, {
     desc = "Search help tags"
+})
+vim.keymap.set("n", "<leader>fp", telescope_cmd.builtin, {
+    desc = "Find Pickers"
 })

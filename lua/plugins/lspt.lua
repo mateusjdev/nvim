@@ -20,7 +20,8 @@ return {
     },
     {
         'nvim-treesitter/nvim-treesitter-context',
-        enable = ENABLE_TREESITTER
+        -- enabled = ENABLE_TREESITTER
+        enabled = false     -- disabled for now (testing nvim-navic)
     },
     {
         "tpope/vim-fugitive",
