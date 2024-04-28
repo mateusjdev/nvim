@@ -19,6 +19,7 @@ local utils = require("utils")
 ENABLE_LSP = vim.loop.os_uname().machine ~= 'aarch64' -- disable lsp on arm devices
 ENABLE_TREESITTER = utils.hasExecuTable({ vim.fn.getenv("CC"), "cc", "gcc", "clang", "cl", "zig" })
 ENABLE_RIPGREP = utils.hasExecuTable("rg")
+ENABLE_OSC52 = os.getenv("SSH_TTY") ~= nil or os.getenv("SSH_CLIENT") ~= nil
 
 -- load plugins list
 require("lazy").setup(
