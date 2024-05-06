@@ -12,7 +12,7 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-require("settings") -- simple settings
+require("options") -- simple settings
 local utils = require("utils")
 
 -- TODO: store flags in config

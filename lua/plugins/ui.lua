@@ -75,6 +75,7 @@ return {
             }
         end
     },
+    -- theme
     {
         "folke/tokyonight.nvim",
         lazy = false,
