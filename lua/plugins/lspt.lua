@@ -45,5 +45,9 @@ return {
         opts = {
             direction = 'float'
         }
+    },
+    {
+        "tpope/vim-sleuth",
+        event = "BufReadPre"
     }
 }
