@@ -18,6 +18,8 @@ vim.opt.modeline = false
 
 vim.opt.endofline = false
 
+vim.opt.modeline = true
+
 vim.opt.listchars:append "space:⋅"
 vim.opt.listchars:append "eol:↴"
 vim.opt.listchars:append "tab:->"
