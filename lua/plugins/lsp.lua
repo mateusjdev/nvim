@@ -142,7 +142,7 @@ return {
             -- check dependencies and enable handler if possible
             local ensure_installed = { "lua_ls" }
             if utils.hasExecuTable("npm") then
-                table.insert(ensure_installed, "tsserver")
+                table.insert(ensure_installed, "ts_ls")
                 table.insert(ensure_installed, "pyright")
                 table.insert(ensure_installed, "yamlls")
                 table.insert(ensure_installed, "html")
@@ -166,8 +166,8 @@ return {
                         require('lspconfig').gopls.setup({})
                     end,
 
-                    tsserver = function()
-                        require('lspconfig').tsserver.setup({})
+                    ts_ls = function()
+                        require('lspconfig').ts_ls.setup({})
                     end,
 
                     yamlls = function()

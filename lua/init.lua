@@ -18,7 +18,10 @@ local utils = require("utils")
 -- TODO: store flags in config
 -- disable lsp on arm devices
 ENABLE_LSP = vim.loop.os_uname().machine ~= 'aarch64' or os.getenv("NVIM_FORCE_LSP") ~= nil
-ENABLE_TREESITTER = utils.hasExecuTable({ vim.fn.getenv("CC"), "cc", "gcc", "clang", "cl", "zig" })
+-- TODO: disable treesitter on big files (+swapfiles)
+ENABLE_TREESITTER = utils.hasExecuTable({
+    vim.fn.getenv("CC"), "cc", "gcc", "clang", "cl", "zig"
+})
 ENABLE_RIPGREP = utils.hasExecuTable("rg")
 ENABLE_OSC52 = os.getenv("SSH_TTY") ~= nil or os.getenv("SSH_CLIENT") ~= nil
 
@@ -50,4 +53,3 @@ end
 
 require("keymaps")
 require("autocmd")
-

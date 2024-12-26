@@ -61,6 +61,8 @@ return {
             },
 
             options = {
+                -- TODO: chang acording files
+                -- disable_in: yaml
                 reindent_linewise = true,
             },
         }
