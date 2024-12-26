@@ -154,8 +154,12 @@ return {
             "MunifTanjim/nui.nvim",
         },
         opts = {
+            close_if_last_window = true,
+            window = {
+                position = "right"
+            },
             filesystem = {
-                hijack_netrw_behavior = "open_default",
+                hijack_netrw_behavior = "open_default"
             }
         }
     },

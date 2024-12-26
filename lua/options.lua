@@ -1,6 +1,6 @@
--- opt.guicursor = ""
-
 local opt = vim.opt
+
+-- opt.guicursor = ""
 
 vim.g.mapleader = " "
 
@@ -18,7 +18,7 @@ opt.clipboard = "unnamedplus" -- integrade yank register to keyboard register
 opt.scrolloff = 6
 
 opt.termguicolors = true
-opt.modeline = false
+opt.modeline = true
 
 opt.endofline = false
 opt.listchars:append {
@@ -32,12 +32,13 @@ opt.ignorecase = true
 opt.smartcase = true
 opt.infercase = true
 
+-- Spelling
 opt.spelllang = "pt_br,en"
 
--- title
+-- Title
 opt.title = true
 -- TODO: change to path if in project/git repo
-opt.titlestring = 'n%{expand("%:p:~")}'
+opt.titlestring = 'nvim %{expand("%:p:~")}'
 
 opt.splitright = true
 opt.splitbelow = true
