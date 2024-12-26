@@ -1,0 +1,22 @@
+diff --git a/lua/plugins/ui.lua b/lua/plugins/ui.lua
+index 333a834..205d4f0 100644
+--- a/lua/plugins/ui.lua
++++ b/lua/plugins/ui.lua
+@@ -141,6 +141,17 @@ return {
+                         enable = true,
+                     },
+                 },
++                -- Options related to logging
++                logger = {
++                    -- Minimum logging level
++                    level = vim.log.levels.DEBUG,
++                    -- Maximum log file size, in KB
++                    max_size = 10000,
++                    -- Limit the number of decimals displayed for floats
++                    float_precision = 0.01,
++                    -- Where Fidget writes its logs to
++                    path = string.format("%s/fidget.nvim.log", vim.fn.stdpath("cache")),
++                },
+             })
+         end
+     },
