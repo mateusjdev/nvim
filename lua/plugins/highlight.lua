@@ -4,19 +4,16 @@ return {
         "nvim-treesitter/nvim-treesitter",
         enabled = ENABLE_TREESITTER,
         build = ":TSUpdate",
-        config = function()
-            local configs = require("nvim-treesitter.configs")
-
-            configs.setup({
-                ensure_installed = { "c", "lua", "vim", "vimdoc", "javascript",
-                    "html", "query", "rust", "markdown", "go",
-                    "dockerfile", "cpp", "bash", "yaml", "regex" },
-                sync_install = false,
-                auto_install = true,
-                highlight = { enable = true },
-                indent = { enable = true },
-            })
-        end
+        opts = {
+            ensure_installed = { "c", "lua", "vim", "vimdoc", "javascript",
+                "html", "query", "rust", "markdown", "go",
+                "dockerfile", "cpp", "bash", "yaml", "regex" },
+            sync_install = false,
+            auto_install = true,
+            highlight = { enable = true },
+            indent = { enable = true },
+        },
+        main = "nvim-treesitter.configs"
     },
     -- adds indentation guides to Neovim
     {
@@ -86,6 +83,7 @@ return {
     -- a color highlighter
     {
         "NvChad/nvim-colorizer.lua",
+        event = "VeryLazy",
         opts = {},
         keys = {
             {
