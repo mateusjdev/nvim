@@ -83,7 +83,6 @@ return {
     -- a color highlighter
     {
         "NvChad/nvim-colorizer.lua",
-        event = "VeryLazy",
         opts = {},
         keys = {
             {
