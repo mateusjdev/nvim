@@ -52,5 +52,12 @@ return {
 
             require('osc52').setup(opts)
         end
+    },{
+        "m-demare/attempt.nvim",
+        opts = {
+            list_buffers = true,
+            ext_options = {},
+            run = {}
+        }
     }
 }

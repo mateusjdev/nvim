@@ -75,3 +75,19 @@ vim.keymap.set("n", "<leader>fh", telescope_cmd.help_tags, {
 vim.keymap.set("n", "<leader>fp", telescope_cmd.builtin, {
     desc = "Find Pickers"
 })
+
+-- attempt
+local attempt = require('attempt')
+
+vim.keymap.set('n', '<leader>ai', attempt.new_input_ext, {
+    desc = "new attempt, inputing extension"
+})
+vim.keymap.set('n', '<leader>ad', attempt.delete_buf, {
+    desc = "delete attempt from current buffer"
+})
+vim.keymap.set('n', '<leader>ac', attempt.rename_buf, {
+    desc = "rename attempt from current buffer"
+})
+vim.keymap.set('n', '<leader>al', ':Telescope attempt<CR>', {
+    desc = "search through attempts"
+})
