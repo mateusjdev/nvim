@@ -1,0 +1,122 @@
+diff --git a/lua/plugins/ui.lua b/lua/plugins/ui.lua
+index 333a834..57d6c75 100644
+--- a/lua/plugins/ui.lua
++++ b/lua/plugins/ui.lua
+@@ -106,44 +106,6 @@ return {
+             },
+         }
+     },
+-    {
+-        "j-hui/fidget.nvim",
+-        lazy = false,
+-        priority = 1000,
+-        config = function()
+-            require("fidget").setup({
+-                progress = {
+-                    display = {
+-                        done_ttl = 5
+-                    },
+-                },
+-                notification = {
+-                    configs = {
+-                        default = vim.tbl_extend(
+-                            "force",
+-                            require("fidget.notification").default_config,
+-                            { ttl = 5 }
+-                        ),
+-                    },
+-                    override_vim_notify = true,
+-                    -- not used for now as setting these can cause view problems
+-                    -- TODO: check if align = bottom-left + wrap + [LEVEL] message
+-                    -- could be implemented in fidget.nvim (like noice.nvim/mini)
+-                    -- window = {
+-                    --     max_width = math.floor(vim.o.columns * 0.33), -- Maximum width of the notification window
+-                    --     max_height = math.floor(vim.o.lines * 0.5), -- Maximum height of the notification window
+-                    --     x_padding = 1,    -- Padding from right edge of window boundary
+-                    --     y_padding = 0,    -- Padding from bottom edge of window boundary
+-                    -- }
+-                },
+-                integration = {
+-                    ["nvim-tree"] = {
+-                        enable = true,
+-                    },
+-                },
+-            })
+-        end
+-    },
+     {
+         "nvim-neo-tree/neo-tree.nvim",
+         branch = "v3.x",
+@@ -170,4 +132,72 @@ return {
+         end,
+         dependencies = { 'nvim-lua/plenary.nvim' }
+     },
++    -- Better vim.ui
++    {
++        "folke/noice.nvim",
++        priority = 1000,
++        lazy = false,
++        opts = {
++            notify = {
++                enabled = true,
++                view = "mini",
++            },
++            messages = {
++                enabled = true,              -- enables the Noice messages UI
++                view = "mini",               -- default view for messages
++                view_error = "notify",       -- view for errors
++                view_warn = "mini",          -- view for warnings
++                view_history = "messages",   -- view for :messages
++                view_search = "virtualtext", -- view for search count messages. Set to `false` to disable
++            },
++            views = {
++                mini = {
++                    timeout = 5000
++                }
++            }
++        },
++        dependencies = {
++            "MunifTanjim/nui.nvim",
++            "rcarriga/nvim-notify"
++        }
++    },
++    {
++        "rcarriga/nvim-notify",
++        keys = {
++            {
++                "<leader>un",
++                function()
++                    require("notify").dismiss({ silent = true, pending = true })
++                end,
++                desc = "Dismiss All Notifications",
++            },
++        },
++        config = function()
++            local stages = require("notify.stages.fade")("top_down")
++            local notify = require("notify")
++
++            notify.setup({
++                minimum_width = 1,
++                timeout = 5000,
++                max_height = function()
++                    return math.floor(vim.o.lines * 0.33)
++                end,
++                max_width = function()
++                    return math.floor(vim.o.columns * 0.33)
++                end,
++                render = "wrapped-compact",
++                stages = {
++                    function(...)
++                        local opts = stages[1](...)
++                        if opts then
++                            opts.border = "none"
++                            opts.row = opts.row + 1
++                        end
++                        return opts
++                    end,
++                    unpack(stages, 2),
++                },
++            })
++        end
++    },
+ }
