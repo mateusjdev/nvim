@@ -21,11 +21,18 @@ return {
     {
         'nvim-treesitter/nvim-treesitter-context',
         -- enabled = ENABLE_TREESITTER
-        enabled = false     -- disabled for now (testing nvim-navic)
+        enabled = false -- disabled for now (testing nvim-navic)
     },
     {
         "tpope/vim-fugitive",
-        event = "VeryLazy"
+        event = "VeryLazy",
+        keys = {
+            {
+                "<leader>tr",
+                vim.cmd.Git,
+                desc = "Open Git"
+            }
+        }
     },
     {
         "lewis6991/gitsigns.nvim",
@@ -44,7 +51,15 @@ return {
         version = "*",
         opts = {
             direction = 'float'
+        },
+        keys = {
+            {
+                "<leader>tt",
+                vim.cmd.ToggleTerm,
+                desc = "Toggle terminal"
+            },
         }
+
     },
     {
         "tpope/vim-sleuth",

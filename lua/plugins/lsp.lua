@@ -20,6 +20,13 @@ return {
         'williamboman/mason.nvim',
         lazy = false,
         config = true,
+        keys = {
+            {
+                "<leader>pm",
+                vim.cmd.Mason,
+                desc = "Open Mason"
+            }
+        }
     },
 
     -- Autocompletion
@@ -155,6 +162,8 @@ return {
                 table.insert(ensure_installed, "clangd")
             end
 
+            local lsp_config = require("lspconfig")
+
             require('mason-lspconfig').setup({
                 ensure_installed = ensure_installed,
                 handlers = {
@@ -163,27 +172,27 @@ return {
                     lsp_zero.default_setup,
 
                     gopls = function()
-                        require('lspconfig').gopls.setup({})
+                        lsp_config.gopls.setup({})
                     end,
 
                     ts_ls = function()
-                        require('lspconfig').ts_ls.setup({})
+                        lsp_config.ts_ls.setup({})
                     end,
 
                     yamlls = function()
-                        require('lspconfig').yamlls.setup({})
+                        lsp_config.yamlls.setup({})
                     end,
 
                     html = function()
-                        require('lspconfig').html.setup({})
+                        lsp_config.html.setup({})
                     end,
 
                     pyright = function()
-                        require('lspconfig').pyright.setup({})
+                        lsp_config.pyright.setup({})
                     end,
 
                     clangd = function()
-                        require('lspconfig').clangd.setup({
+                        lsp_config.clangd.setup({
                             filetypes = { "c", "h", "cpp", "objc", "objcpp",
                                 "cuda", "proto", "hpp" },
                         })
@@ -193,7 +202,7 @@ return {
                         -- (Optional) Configure lua language server for neovim
                         -- local lua_opts = lsp_zero.nvim_lua_ls()
                         -- require('lspconfig').lua_ls.setup(lua_opts)
-                        require('lspconfig').lua_ls.setup({
+                        lsp_config.lua_ls.setup({
                             settings = {
                                 Lua = {
                                     diagnostics = {
