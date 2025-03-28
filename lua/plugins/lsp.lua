@@ -1,25 +1,12 @@
 local utils = require("utils")
 
 return {
-    {
-        "folke/neodev.nvim",
-        enabled = true
-    },
-    {
-        'VonHeikemen/lsp-zero.nvim',
-        branch = 'v3.x',
-        lazy = true,
-        config = false,
-        init = function()
-            -- Disable automatic setup, we are doing it manually
-            vim.g.lsp_zero_extend_cmp = 0
-            vim.g.lsp_zero_extend_lspconfig = 0
-        end,
-    },
+    -- TODO: Replace with https://github.com/folke/lazydev.nvim
+    -- folke/neodev.nvim
     {
         'williamboman/mason.nvim',
         lazy = false,
-        config = true,
+        opts = {},
         keys = {
             {
                 "<leader>pm",
@@ -28,43 +15,60 @@ return {
             }
         }
     },
+    {
+        "williamboman/mason-lspconfig.nvim",
+        lazy = false,
+        config = function()
+            -- check dependencies and enable handler if possible
+            local ensure_installed = { "lua_ls" }
+            if utils.hasExecuTable("npm") then
+                table.insert(ensure_installed, "ts_ls")
+                table.insert(ensure_installed, "pyright")
+                table.insert(ensure_installed, "yamlls")
+                table.insert(ensure_installed, "html")
+            end
 
+            -- TODO: Check if it will be installed correctly in a new environment:
+            -- clangd - unzip, clangd
+            -- gopls - gopls
+
+            require('mason-lspconfig').setup({
+                ensure_installed = ensure_installed,
+                -- TODO: Add a generic handler?
+                handlers = {},
+            })
+        end
+    },
     -- Autocompletion
     {
         'hrsh7th/nvim-cmp',
         event = 'InsertEnter',
-        dependencies = { 'L3MON4D3/LuaSnip' },
         config = function()
-            -- Here is where you configure the autocompletion settings.
-            local lsp_zero = require('lsp-zero')
-            lsp_zero.extend_cmp()
-
-            -- And you can configure cmp even more, if you want to.
             local cmp = require('cmp')
-            local cmp_action = lsp_zero.cmp_action()
 
             cmp.setup({
-                formatting = lsp_zero.cmp_format({ details = true }),
+                sources = {
+                    { name = 'nvim_lsp' },
+                },
                 mapping = cmp.mapping.preset.insert({
                     -- `Enter` key to confirm completion
+                    -- Accept currently selected item.
+                    -- Set `select` to `false` to only confirm explicitly selected items.
                     ['<CR>'] = cmp.mapping.confirm({ select = false }),
 
                     -- Ctrl+Space to trigger completion menu
                     ['<C-Space>'] = cmp.mapping.complete(),
-
-                    -- Navigate between snippet placeholder
-                    ['<C-f>'] = cmp_action.luasnip_jump_forward(),
-                    ['<C-b>'] = cmp_action.luasnip_jump_backward(),
+                    ['<C-e>'] = cmp.mapping.abort(),
 
                     -- Scroll up and down in the completion documentation
                     ['<C-u>'] = cmp.mapping.scroll_docs(-4),
                     ['<C-d>'] = cmp.mapping.scroll_docs(4),
+                    -- ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+                    -- ['<C-f>'] = cmp.mapping.scroll_docs(4),
                 }),
-                snippet = {
-                    expand = function(args)
-                        require('luasnip').lsp_expand(args.body)
-                    end,
-                },
+                -- TODO: User https://github.com/echasnovski/mini.snippets
+                -- https://github.com/hrsh7th/nvim-cmp/blob/1e1900b0769324a9675ef85b38f99cca29e203b3/README.md?plain=1#L77
+                -- snippet = {}
             })
         end
     },
@@ -72,6 +76,7 @@ return {
         "SmiteshP/nvim-navic",
         dependencies = "neovim/nvim-lspconfig",
         lazy = true,
+        event = 'LspAttach',
         opts = {
             highlight = true,
             separator = " " .. require("lualine").get_config().options.component_separators.left .. " "
@@ -116,7 +121,6 @@ return {
             require("nvim-navic").setup(opts)
         end
     },
-
     -- LSP
     {
         'neovim/nvim-lspconfig',
@@ -125,92 +129,6 @@ return {
         dependencies = {
             'hrsh7th/cmp-nvim-lsp',
             'williamboman/mason-lspconfig.nvim'
-        },
-        config = function()
-            require("neodev").setup({})
-
-            -- This is where all the LSP shenanigans will live
-            local lsp_zero = require('lsp-zero')
-            lsp_zero.extend_lspconfig()
-
-            -- if you want to know more about mason.nvim
-            -- read this: https://github.com/VonHeikemen/lsp-zero.nvim/blob/v3.x/doc/md/guides/integrate-with-mason-nvim.md
-            lsp_zero.on_attach(function(client, bufnr)
-                -- see :help lsp-zero-keybindings
-                -- to learn the available actions
-                lsp_zero.default_keymaps({ buffer = bufnr })
-                if client.server_capabilities.documentSymbolProvider then
-                    require("nvim-navic").attach(client, bufnr)
-                end
-            end)
-
-            -- check dependencies and enable handler if possible
-            local ensure_installed = { "lua_ls" }
-            if utils.hasExecuTable("npm") then
-                table.insert(ensure_installed, "ts_ls")
-                table.insert(ensure_installed, "pyright")
-                table.insert(ensure_installed, "yamlls")
-                table.insert(ensure_installed, "html")
-            end
-            if utils.hasExecuTable("go") then
-                table.insert(ensure_installed, "gopls")
-            end
-            -- TODO: check if has unzip dependency on windows
-            if utils.hasExecuTable("unzip") and utils.hasExecuTable("clangd") then
-                table.insert(ensure_installed, "clangd")
-            end
-
-            local lsp_config = require("lspconfig")
-
-            require('mason-lspconfig').setup({
-                ensure_installed = ensure_installed,
-                handlers = {
-                    -- this first function is the "default handler"
-                    -- it applies to every language server without a "custom handler"
-                    lsp_zero.default_setup,
-
-                    gopls = function()
-                        lsp_config.gopls.setup({})
-                    end,
-                    ts_ls = function()
-                        lsp_config.ts_ls.setup({})
-                    end,
-
-                    yamlls = function()
-                        lsp_config.yamlls.setup({})
-                    end,
-
-                    html = function()
-                        lsp_config.html.setup({})
-                    end,
-
-                    pyright = function()
-                        lsp_config.pyright.setup({})
-                    end,
-
-                    clangd = function()
-                        lsp_config.clangd.setup({
-                            filetypes = { "c", "h", "cpp", "objc", "objcpp",
-                                "cuda", "proto", "hpp" },
-                        })
-                    end,
-
-                    lua_ls = function()
-                        -- (Optional) Configure lua language server for neovim
-                        -- local lua_opts = lsp_zero.nvim_lua_ls()
-                        -- require('lspconfig').lua_ls.setup(lua_opts)
-                        lsp_config.lua_ls.setup({
-                            settings = {
-                                Lua = {
-                                    diagnostics = {
-                                        unusedLocalExclude = { "_*" }
-                                    }
-                                }
-                            }
-                        })
-                    end,
-                }
-            })
-        end
+        }
     }
 }
