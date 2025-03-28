@@ -5,23 +5,6 @@ vim.keymap.set("n", "<leader>pp", vim.cmd.Lazy, {
     desc = "Open Lazy"
 })
 
--- plugins/ui/barbar (Buffer Management)
-vim.keymap.set("n", "<leader>bN", vim.cmd.BufferPrevious, {
-    desc = "Previous Buffer"
-})
-vim.keymap.set("n", "<leader>bn", vim.cmd.BufferNext, {
-    desc = "Next Buffer"
-})
-vim.keymap.set("n", "<leader>bd", vim.cmd.BufferClose, {
-    desc = "Close Buffer"
-})
-vim.keymap.set("n", "ZC", vim.cmd.BufferClose, {
-    desc = "Close Buffer"
-})
-vim.keymap.set("n", "<C-w", vim.cmd.BufferClose, {
-    desc = "Close buffer"
-})
-
 -- plugins/ui/lualine
 --- Switch between displaying [file path] and [filename]
 local lualine = require("lualine")

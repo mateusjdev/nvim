@@ -51,5 +51,9 @@ if not ENABLE_TREESITTER then
     vim.notify("No compilers found, disabling treesitter", vim.log.levels.WARN)
 end
 
+if ENABLE_LSP then
+    require("lsp")
+end
+
 require("keymaps")
 require("autocmd")

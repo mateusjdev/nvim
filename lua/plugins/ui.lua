@@ -6,7 +6,7 @@ return {
         config = function()
             local enable_winbar = function()
                 -- TODO: check space for every split window
-                local is_lsp_active = vim.lsp.get_active_clients()[1] ~= nil
+                local is_lsp_active = vim.lsp.get_clients()[1] ~= nil
                 return is_lsp_active -- or require("nvim-navic").is_available()
             end
 
@@ -54,7 +54,7 @@ return {
                         -- { 'filetype', cond = enable_winbar }
                         {
                             function()
-                                return vim.lsp.get_active_clients()[1].config.name
+                                return vim.lsp.get_clients()[1].config.name
                             end,
                             cond = enable_winbar
                         },
@@ -87,6 +87,7 @@ return {
     },
     {
         'romgrk/barbar.nvim',
+        lazy = false,
         dependencies = {
             'lewis6991/gitsigns.nvim',
             'nvim-tree/nvim-web-devicons',
@@ -104,6 +105,40 @@ return {
                 -- Or, specify both
                 Outline = { event = 'BufWinLeave', text = 'symbols-outline' },
             },
+        },
+        keys = {
+            {
+                "<leader>bn",
+                vim.cmd.BufferNext,
+                mode = { 'n' },
+                desc = "Next Buffer"
+            },
+            {
+                "<leader>bN",
+                vim.cmd.BufferPrevious,
+                mode = { 'n' },
+                desc = "Previous Buffer"
+            },
+            {
+                "<leader>bd",
+                vim.cmd.BufferClose,
+                mode = { 'n' },
+                desc = "Close Buffer"
+            },
+            {
+                "ZC",
+                vim.cmd.BufferClose,
+                mode = { 'n' },
+                desc = "Close Buffer"
+            }
+            -- TODO: Change C-w to something else
+            -- ,
+            -- {
+            --     "<C-w>",
+            --     vim.cmd.BufferClose,
+            --     mode = { 'n' },
+            --     desc = "Close Buffer"
+            -- }
         }
     },
     {
@@ -147,6 +182,7 @@ return {
     {
         "nvim-neo-tree/neo-tree.nvim",
         branch = "v3.x",
+        lazy = false,
         dependencies = {
             "nvim-lua/plenary.nvim",
             "nvim-tree/nvim-web-devicons",
@@ -159,6 +195,14 @@ return {
             },
             filesystem = {
                 hijack_netrw_behavior = "open_default"
+            }
+        },
+        keys = {
+            {
+                "<leader>tf",
+                ":Neotree toggle<CR>",
+                mode = { 'n' },
+                desc = "Toggle Neotree"
             }
         }
     },
