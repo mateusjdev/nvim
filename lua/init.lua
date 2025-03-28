@@ -18,7 +18,6 @@ local utils = require("utils")
 -- TODO: store flags in config
 -- disable lsp on arm devices
 ENABLE_LSP = vim.loop.os_uname().machine ~= 'aarch64' or os.getenv("NVIM_FORCE_LSP") ~= nil
--- TODO: disable treesitter on big files (+swapfiles)
 ENABLE_TREESITTER = utils.hasExecuTable({
     vim.fn.getenv("CC"), "cc", "gcc", "clang", "cl", "zig"
 })
