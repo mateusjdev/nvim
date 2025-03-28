@@ -20,6 +20,7 @@ return {
         "lukas-reineke/indent-blankline.nvim",
         main = "ibl",
         -- enabled = false,
+        event = "UIEnter",
         -- opts = {},
         -- TODO: test another plugin or make it work with vim.opt.list
         config = function()
@@ -59,7 +60,14 @@ return {
             hooks.register(hooks.type.SCOPE_HIGHLIGHT,
                 hooks.builtin.scope_highlight_from_extmark)
         end,
-        event = "UIEnter"
+        keys = {
+            {
+                "<leader>ti",
+                vim.cmd.IBLToggle,
+                mode = { "n" },
+                desc = "Toggle IBL"
+            }
+        }
     },
     -- hide your colorcolumn when unneeded.
     {

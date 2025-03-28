@@ -6,7 +6,15 @@ return {
     },
     {
         "mbbill/undotree",
-        lazy = false
+        lazy = false,
+        keys = {
+            {
+                "<leader>tu",
+                vim.cmd.UndotreeToggle,
+                mode = { 'n' },
+                desc = "Toggle Undotree"
+            }
+        }
     },
     {
         -- Check LazyLoad
@@ -52,7 +60,8 @@ return {
 
             require('osc52').setup(opts)
         end
-    },{
+    },
+    {
         "m-demare/attempt.nvim",
         opts = {
             list_buffers = true,

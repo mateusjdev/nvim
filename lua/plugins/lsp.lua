@@ -33,9 +33,7 @@ return {
     {
         'hrsh7th/nvim-cmp',
         event = 'InsertEnter',
-        dependencies = {
-            { 'L3MON4D3/LuaSnip' },
-        },
+        dependencies = { 'L3MON4D3/LuaSnip' },
         config = function()
             -- Here is where you configure the autocompletion settings.
             local lsp_zero = require('lsp-zero')
@@ -125,8 +123,8 @@ return {
         cmd = { 'LspInfo', 'LspInstall', 'LspStart' },
         event = { 'BufReadPre', 'BufNewFile' },
         dependencies = {
-            { 'hrsh7th/cmp-nvim-lsp' },
-            { 'williamboman/mason-lspconfig.nvim' },
+            'hrsh7th/cmp-nvim-lsp',
+            'williamboman/mason-lspconfig.nvim'
         },
         config = function()
             require("neodev").setup({})
@@ -174,7 +172,6 @@ return {
                     gopls = function()
                         lsp_config.gopls.setup({})
                     end,
-
                     ts_ls = function()
                         lsp_config.ts_ls.setup({})
                     end,
