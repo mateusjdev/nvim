@@ -7,9 +7,10 @@ return {
         config = function()
             require('nvim-treesitter.configs').setup({
                 ensure_installed = {
-                    "c", "lua", "vim", "vimdoc", "javascript", "html", "query",
-                    "rust", "markdown", "go", "dockerfile", "cpp", "bash",
-                    "yaml", "regex"
+                    "bash", "c", "c_sharp", "cpp", "css", "csv", "dockerfile", "elixir", "git_config", "git_rebase",
+                    "gitattributes", "gitcommit", "gitignore", "go", "gomod", "gosum", "html", "ini", "javascript",
+                    "json", "lua", "markdown", "markdown_inline", "powershell", "python", "query", "regex", "rust",
+                    "ssh_config", "toml", "typescript", "vim", "vimdoc", "yaml"
                 },
                 sync_install = false,
                 auto_install = true,
